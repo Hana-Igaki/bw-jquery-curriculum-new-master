@@ -31,8 +31,35 @@
         $('.modal').fadeOut(3000);
       });
       // .click() クリック時のイベントを登録する。
-      $('html').click(function(){
-        alert('click!');
+      $(document).on('click', function(event) {
+        // クリックした位置の座標を取得
+        const x = event.pageX;
+        const y = event.pageY;
+
+        // 円を作る
+        const $circle = $('<div></div>');
+
+        $circle.css({
+          position: 'absolute',
+          top: y - 5 + 'px',    // 中心に合わせるため少しずらす（円の半径25pxと想定）
+          left: x - 5 + 'px',
+          width: '10px',
+          height: '10px',
+          backgroundColor: '#ffcccc',
+          borderRadius: '50%',
+          pointerEvents: 'none', // クリックイベントを邪魔しないように
+          zIndex: 1000
+        });
+
+        // bodyに追加
+        $('body').append($circle);
+
+        // 1秒後に消す（アニメーションも可）
+        setTimeout(() => {
+          $circle.fadeOut(500, () => {
+            $circle.remove();
+          });
+        }, 100);
       });
       // .fadeIn() 一定時間かけてフェードインする。
       // .fadeOut() 一定時間かけてフェードアウトする。
