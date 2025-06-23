@@ -24,39 +24,15 @@
       // 今回やるのはモーダルです。
       // .modal-show をクリックすることで .modal をfadeInさせる。
       $('.modal-show').click(function(){
+        alert('clicked!');
         $('.modal').fadeIn(1000);
       });
       // .modal-close をクリックで .modal をfadeOutさせる。
       $('.modal-close').click(function(){
+        alert('clicked!');
         $('.modal').fadeOut(1000);
       });
       // .click() クリック時のイベントを登録する。
-      $(document).on('click', function(event) {
-        let x = event.pageX;
-        let y = event.pageY;
-
-        let $circle = $('<div></div>');
-
-        $circle.css({
-          position: 'absolute',
-          top: y - 5 + 'px',
-          left: x - 5 + 'px',
-          width: '10px',
-          height: '10px',
-          backgroundColor: '#ffcccc',
-          borderRadius: '50%',
-          pointerEvents: 'none',
-          zIndex: 1000
-        });
-
-        $('body').append($circle);
-
-        setTimeout(() => {
-          $circle.fadeOut(300, () => {
-            $circle.remove();
-          });
-        }, 100);
-      });
       // .fadeIn() 一定時間かけてフェードインする。
       // .fadeOut() 一定時間かけてフェードアウトする。
     </script>

@@ -29,7 +29,7 @@
           dataType: 'json',
           timeout: 1000,
         }).done(function(pokemonData){
-          console.log(pokemonDatad);
+          console.log(pokemonData);
           let speciesUrl = pokemonData.species.url;
           $.ajax({
             url: speciesUrl,
