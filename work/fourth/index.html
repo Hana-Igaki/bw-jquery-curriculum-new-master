@@ -64,12 +64,12 @@
       $('.menu__list li').hover(drop,up);
 
       function drop(){
-        let chird = $(this).stop(true,true).children('.menu__list__childList');
+        let chird = $(this).children('.menu__list__childList').stop(true,true);
         chird.slideDown('slow');
       };
 
       function up(){
-        let chird = $(this).stop(true,true).children('.menu__list__childList');
+        let chird = $(this).children('.menu__list__childList').stop(true,true);
         chird.slideUp('slow');
       }
     </script>
