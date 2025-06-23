@@ -16,6 +16,114 @@
   <script src="../../common/js/jquery.js"></script>
   <script>
     // 回答はここに書いてね
+    function setupSearchButton(){
+      $('.btn').on('click',function(){
+
+        let randomnum = Math.floor(Math.random() * 151) + 1;
+        let pokemonUrl = 'https://pokeapi.co/api/v2/pokemon/' + randomnum;
+        let itemUrl = 'https://pokeapi.co/api/v2/item/4';
+
+        $.ajax({
+          url: pokemonUrl,
+          type: 'GET',
+          dataType: 'json',
+          timeout: 1000,
+        }).done(function(pokemonData){
+          console.log(pokemonData);
+          let speciesUrl = pokemonData.species.url;
+          $.ajax({
+            url: speciesUrl,
+            type: 'GET',
+            dataType: 'json',
+            timeout: 1000,
+          }).done(function(speciesData){
+            console.log(pokemonData.species.url);
+            console.log(pokemonData.sprites.front_default);
+            let japaneseName = '';
+            for(let i = 0; i <= speciesData.names.length; i++){
+              if(speciesData.names[i].language.name === 'ja'){
+                japaneseName = speciesData.names[i].name;
+                break;
+              }
+            }
+            $.ajax({
+              url: itemUrl,
+              type: 'GET',
+              dataType: 'json',
+              timeout: 1000,
+            }).done(function(itemData){
+              $('.wrapper').html(encountHtml);
+              $('.name').text(japaneseName);
+              $('.img').attr('src', pokemonData.sprites.front_default);
+
+              $('#catch').on('click', function(){
+                let probability = Math.floor(Math.random() * 2);
+                if(probability === 0){
+                  $('.wrapper').html(doneHtml);
+                  $('.img').attr('src', itemData.sprites.default);
+                }else{
+                  $('.wrapper').html(failHtml);
+                }
+
+                $('[data-js="reset"]').on('click', function(){
+                  $('.wrapper').html(search);
+                  setupSearchButton();
+                });
+              });
+
+              $('[data-js="reset"]').on('click', function(){
+                $('.wrapper').html(search);
+                setupSearchButton();
+              });
+            }).fail(function(){
+              $('.wrapper').append('モンスターボール情報の取得に失敗しました');
+            });
+          }).fail(function(){
+            $('.wrapper').append('ポケモン情報の取得に失敗しました');
+          });
+        });
+      });
+    }
+
+    setupSearchButton();
+
+    // モンスターの取得
+    'https://pokeapi.co/api/v2/pokemon/1'
+
+    // モンスターボールの取得
+    'https://pokeapi.co/api/v2/item/4'
+
+    // 「捕まえる」失敗時の画面表示
+    let failHtml =
+    `
+      <p class="text">逃げられてしまった...</p>
+      <button class="btn mt" data-js="reset">戻る</button>
+    `
+
+    // 「ポケモンを探す」後の画面表示
+    let encountHtml =
+    `
+    <p class="name"></p>
+    <div>
+      <img class="img" src="https://pokeapi.co/api/v2/pokemon/1" alt="">
+    </div>
+    <div>
+      <button class="btn" id="catch">捕まえる</button>
+      <button class="btn" data-js="reset">逃げる</button>
+    </div>
+    `
+
+    // 「捕まえる」成功時の画面表示
+    let doneHtml =
+    `
+    <p class="name">ゲットしました</p>
+    <div>
+      <img class="img" src="https://pokeapi.co/api/v2/item/4" alt="">
+    </div>
+    <button class="btn" data-js="reset">戻る</button>
+  `
+  // 「戻る」、「逃げる」ボタンを押したとき
+  let search = '<button type="button" class="btn search-btn" id="pokemon_search">ポケモンを探す</button>'
   </script>
 </body>
 </html>
