@@ -66,13 +66,13 @@
                 }
 
                 $('[data-js="reset"]').on('click', function(){
-                  $('.wrapper').html(surch);
+                  $('.wrapper').html(search);
                   setupSearchButton();
                 });
               });
 
               $('[data-js="reset"]').on('click', function(){
-                $('.wrapper').html(surch);
+                $('.wrapper').html(search);
                 setupSearchButton();
               });
             }).fail(function(){
@@ -123,7 +123,7 @@
     <button class="btn" data-js="reset">戻る</button>
   `
   // 「戻る」、「逃げる」ボタンを押したとき
-  let surch = '<button type="button" class="btn search-btn" id="pokemon_search">ポケモンを探す</button>'
+  let search = '<button type="button" class="btn search-btn" id="pokemon_search">ポケモンを探す</button>'
   </script>
 </body>
 </html>
